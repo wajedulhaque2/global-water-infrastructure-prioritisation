@@ -2,7 +2,7 @@
 
 **Excel decision-support model for prioritising global water and infrastructure investment using World Bank development indicators, scenario weighting, data-quality controls, and dynamic country scoring.**
 
-![Global Water Infrastructure Prioritisation dashboard](screenshots/01-dashboard.png)
+![Global Water Infrastructure Prioritisation dashboard](screenshots/dashboard.png)
 
 ## Overview
 
@@ -27,7 +27,7 @@ The workbook is intended as a **screening and prioritisation tool**, not an auto
 
 The executive dashboard provides a global view of the model, including the countries assessed, highest-priority country, highest Priority Score, median completeness, top-15 ranking, regional averages, selected-country profile, pillar scores, and global priority map.
 
-![Dashboard](screenshots/01-dashboard.png)
+![Dashboard](screenshots/dashboard.png)
 
 ## Country-level analysis
 
@@ -42,19 +42,19 @@ The Country Priority Profile allows the user to drill into an individual country
 - Scenario sensitivity across alternative weighting assumptions
 - The contribution of each pillar to the current Priority Score
 
-![Country detail](screenshots/02-country-detail.png)
+![Country detail](screenshots/country_detail.png)
 
 ### Scenario sensitivity and score drivers
 
 The model calculates the selected country's score under each predefined scenario without requiring the user to manually switch assumptions. This makes it possible to see whether a country's priority is robust or highly sensitive to the weighting framework.
 
-![Scenario sensitivity and score drivers](screenshots/03-scenario-analysis.png)
+![Scenario sensitivity and score drivers](screenshots/Scenario_analysis.png)
 
 ## Model controls
 
 The controls layer separates user assumptions from the analytical engine. Users can select a predefined scenario or define custom pillar weights, change the API analysis window, set the minimum completeness threshold, and change the stale-data threshold.
 
-![Model controls](screenshots/04-controls.png)
+![Model controls](screenshots/controls.png)
 
 ### Scenario weights
 
@@ -162,7 +162,7 @@ Key Power Query components include:
 
 The workbook contains a dedicated Methodology sheet documenting the source, data pipeline, scoring direction, normalisation, weighting, missing-data treatment, freshness controls, QA checks, and interpretation.
 
-![Methodology](screenshots/05-methodology.png)
+![Methodology](screenshots/methodology.png)
 
 A text version is also available in [`docs/methodology.md`](docs/methodology.md).
 
@@ -214,11 +214,11 @@ global-water-infrastructure-prioritisation/
 ├── README.md
 ├── Global_Water_Infrastructure_Prioritisation_Tool.xlsx
 ├── screenshots/
-│   ├── 01-dashboard.png
-│   ├── 02-country-detail.png
-│   ├── 03-scenario-analysis.png
-│   ├── 04-controls.png
-│   └── 05-methodology.png
+│   ├── dashboard.png
+│   ├── country_detail.png
+│   ├── Scenario_analysis.png
+│   ├── controls.png
+│   └── methodology.png
 └── docs/
     └── methodology.md
 ```
