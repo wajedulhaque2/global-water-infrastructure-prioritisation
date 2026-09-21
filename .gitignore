@@ -5,3 +5,8 @@
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# Python cache and local environments
+__pycache__/
+*.py[cod]
+.venv/
