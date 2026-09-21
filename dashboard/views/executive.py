@@ -30,20 +30,17 @@ def render(scored, latest, context: dict[str, object]) -> None:
     cols[2].metric("Highest priority score", f"{top['Priority Score']:.1f}" if top is not None else "n.a.")
     cols[3].metric("Median completeness", f"{eligible['Completeness'].median():.0%}" if not eligible.empty else "n.a.")
 
-    left, right = st.columns([1.15, 1])
-    with left:
-        st.plotly_chart(
-            horizontal_bar(eligible.head(15), "Priority Score", "Country", "Top priority countries", TEAL, 500),
-            width="stretch",
-            config={"displayModeBar": False},
-        )
-    with right:
-        regional = eligible.groupby("Region", observed=True)["Priority Score"].mean().sort_values().reset_index()
-        st.plotly_chart(
-            horizontal_bar(regional, "Priority Score", "Region", "Average priority score by region", BLUE, 500),
-            width="stretch",
-            config={"displayModeBar": False},
-        )
+    st.plotly_chart(
+        horizontal_bar(eligible.head(15), "Priority Score", "Country", "Top priority countries", TEAL, 560, maximum=100),
+        width="stretch",
+        config={"displayModeBar": False},
+    )
+    regional = eligible.groupby("Region", observed=True)["Priority Score"].mean().sort_values().reset_index()
+    st.plotly_chart(
+        horizontal_bar(regional, "Priority Score", "Region", "Average priority score by region", BLUE, 390, maximum=100),
+        width="stretch",
+        config={"displayModeBar": False},
+    )
 
     map_fig = px.choropleth(
         eligible,
@@ -70,8 +67,8 @@ def render(scored, latest, context: dict[str, object]) -> None:
         st.write(f"**Income level:** {selected['IncomeLevel']}")
     with profile_cols[1]:
         pillar = selected[list(PILLAR_COLORS)].rename_axis("Pillar").reset_index(name="Score")
-        pillar_fig = px.bar(pillar, x="Score", y="Pillar", orientation="h", color="Pillar", color_discrete_map=PILLAR_COLORS)
-        pillar_fig.update_layout(title="Pillar scores", showlegend=False, xaxis_range=[0, 100])
-        st.plotly_chart(style_figure(pillar_fig, 300), width="stretch", config={"displayModeBar": False})
+        pillar_fig = horizontal_bar(pillar, "Score", "Pillar", "Pillar scores", TEAL, 320, maximum=100)
+        pillar_fig.update_traces(marker_color=[PILLAR_COLORS[name] for name in pillar.sort_values("Score")["Pillar"]])
+        st.plotly_chart(pillar_fig, width="stretch", config={"displayModeBar": False})
 
     st.info("Priority scores are relative screening measures. They do not include project cost, engineering feasibility, political risk, or expected financial return.")
