@@ -30,22 +30,19 @@ def render(scored, latest, indicators, context: dict[str, object]) -> None:
     ).reset_index()
     coverage["Coverage"] = coverage["countries"] / scored["ISO3"].nunique()
 
-    left, right = st.columns(2)
-    with left:
-        coverage_fig = horizontal_bar(coverage, "Coverage", "Indicator", "Country coverage by indicator", TEAL, 480)
-        coverage_fig.update_xaxes(tickformat=".0%", range=[0, 1])
-        st.plotly_chart(coverage_fig, width="stretch", config={"displayModeBar": False})
-    with right:
-        completeness = px.histogram(scored, x="Completeness", nbins=10, color_discrete_sequence=[BLUE])
-        completeness.add_vline(x=context["min_completeness"], line_dash="dash", line_color=ORANGE)
-        completeness.update_layout(title="Country completeness distribution", xaxis_tickformat=".0%", yaxis_title="Countries")
-        st.plotly_chart(style_figure(completeness, 480), width="stretch", config={"displayModeBar": False})
+    coverage_fig = horizontal_bar(coverage, "Coverage", "Indicator", "Country coverage by indicator", TEAL, 480, value_format=".0%", maximum=1)
+    coverage_fig.update_xaxes(tickformat=".0%")
+    st.plotly_chart(coverage_fig, width="stretch", config={"displayModeBar": False})
+    completeness = px.histogram(scored, x="Completeness", nbins=10, color_discrete_sequence=[BLUE])
+    completeness.add_vline(x=context["min_completeness"], line_dash="dash", line_color=ORANGE)
+    completeness.update_layout(title="Country completeness distribution", xaxis_tickformat=".0%", yaxis_title="Countries")
+    st.plotly_chart(style_figure(completeness, 380), width="stretch", config={"displayModeBar": False})
 
     stale_by_indicator = coverage.loc[coverage["stale"] > 0].sort_values("stale", ascending=False)
     if stale_by_indicator.empty:
         st.success(f"No latest observations are stale at the {context['stale_years']}-year threshold.")
     else:
-        st.plotly_chart(horizontal_bar(stale_by_indicator, "stale", "Indicator", "Stale latest observations by indicator", ORANGE, 380), width="stretch", config={"displayModeBar": False})
+        st.plotly_chart(horizontal_bar(stale_by_indicator, "stale", "Indicator", "Stale latest observations by indicator", ORANGE, 420, value_format=",.0f"), width="stretch", config={"displayModeBar": False})
 
     st.subheader("Indicator coverage")
     st.dataframe(

@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-from chart_utils import BLUE, GREEN, ORANGE, PILLAR_COLORS, TEAL, style_figure
+from chart_utils import BLUE, GREEN, ORANGE, PILLAR_COLORS, TEAL, horizontal_bar, style_figure
 from model import PILLARS, freshness_status
 
 
@@ -53,23 +53,19 @@ def render(scored, scored_latest, history, indicators, comparison, context: dict
     cols[2].metric("Data completeness", f"{selected['Completeness']:.0%}")
     cols[3].metric("Model status", selected["Eligibility"])
 
-    left, right = st.columns(2)
-    with left:
-        pillars = selected[PILLARS].rename_axis("Pillar").reset_index(name="Score")
-        fig = px.bar(pillars, x="Score", y="Pillar", orientation="h", color="Pillar", color_discrete_map=PILLAR_COLORS)
-        fig.update_layout(title="Pillar scores", showlegend=False, xaxis_range=[0, 100])
-        st.plotly_chart(style_figure(fig, 350), width="stretch", config={"displayModeBar": False})
-    with right:
-        scenario_country = comparison.loc[comparison["ISO3"].eq(selected["ISO3"])].copy()
-        scenario_country["Scenario"] = pd.Categorical(
-            scenario_country["Scenario"],
-            ["Base Case", "Water-Stress Focus", "Social-Impact Focus", "Custom"],
-            ordered=True,
-        )
-        scenario_country = scenario_country.sort_values("Scenario")
-        fig = px.bar(scenario_country, x="Priority Score", y="Scenario", orientation="h", text_auto=".1f", color_discrete_sequence=[BLUE])
-        fig.update_layout(title="Scenario sensitivity", xaxis_range=[0, 100])
-        st.plotly_chart(style_figure(fig, 350), width="stretch", config={"displayModeBar": False})
+    pillars = selected[PILLARS].rename_axis("Pillar").reset_index(name="Score")
+    fig = horizontal_bar(pillars, "Score", "Pillar", "Pillar scores", TEAL, 320, maximum=100)
+    fig.update_traces(marker_color=[PILLAR_COLORS[name] for name in pillars.sort_values("Score")["Pillar"]])
+    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
+    scenario_country = comparison.loc[comparison["ISO3"].eq(selected["ISO3"])].copy()
+    scenario_country["Scenario"] = pd.Categorical(
+        scenario_country["Scenario"],
+        ["Base Case", "Water-Stress Focus", "Social-Impact Focus", "Custom"],
+        ordered=True,
+    )
+    scenario_country = scenario_country.sort_values("Scenario")
+    fig = horizontal_bar(scenario_country, "Priority Score", "Scenario", "Scenario sensitivity", BLUE, 320, maximum=100)
+    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
     benchmark = country_latest[["Indicator label", "Need Score", "Pillar"]].copy()
     global_median = scored_latest.groupby("Indicator ID", observed=True)["Need Score"].median()
@@ -87,8 +83,13 @@ def render(scored, scored_latest, history, indicators, comparison, context: dict
         orientation="h",
         color_discrete_map={"Need Score": TEAL, "Global median": "#B8C6CF", "Regional median": "#203A4C"},
     )
-    fig.update_layout(title="Indicator need scores versus benchmarks", xaxis_range=[0, 100], legend_title=None)
-    st.plotly_chart(style_figure(fig, 560), width="stretch", config={"displayModeBar": False})
+    fig.update_layout(title="Indicator need scores versus benchmarks", xaxis_range=[0, 100], legend_title=None,
+                      legend={"orientation": "h", "y": -0.17, "x": 0, "xanchor": "left"})
+    fig.update_yaxes(title=None, showgrid=False, automargin=True)
+    fig.update_xaxes(title=None)
+    fig = style_figure(fig, 600)
+    fig.update_layout(margin={"l": 24, "r": 32, "t": 64, "b": 100})
+    st.plotly_chart(fig, width="stretch", config={"displayModeBar": False})
 
     indicator = st.selectbox("Historical indicator", country_latest["Indicator ID"].tolist(), format_func=lambda value: LABELS[value])
     trend = history.loc[(history["ISO3"].eq(selected["ISO3"])) & (history["Indicator ID"].eq(indicator))].sort_values("Year")
