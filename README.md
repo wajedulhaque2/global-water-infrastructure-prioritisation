@@ -191,6 +191,25 @@ A text version is also available in [`docs/methodology.md`](docs/methodology.md)
 
 > The Power Query refresh requires an internet connection. Filled Maps, Geography-linked images, and some newer dynamic-array functions require a modern version of Microsoft Excel and may not render fully in alternative spreadsheet applications.
 
+## Interactive web dashboard
+
+The repository also includes a Streamlit dashboard built from the workbook's embedded World Bank snapshot. It provides:
+
+- An executive ranking view and global priority map
+- Country-level indicator history and benchmark comparisons
+- Base, Water-Stress, Social-Impact, and custom weighting scenarios
+- Scenario rank and score movement analysis
+- Data coverage, freshness, and eligibility diagnostics
+
+Run it locally from the repository root:
+
+```bash
+pip install -r requirements.txt
+streamlit run dashboard/app.py
+```
+
+For Streamlit Community Cloud, use `dashboard/app.py` as the application entry point.
+
 ## Data source
 
 Primary source: **World Bank World Development Indicators (WDI)** via the World Bank Indicators API.

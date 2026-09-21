@@ -1,0 +1,10 @@
+Indicator ID,WB Code,Indicator,Pillar,Direction,Unit,Active,Within-Pillar Weight,Latest Data,Notes,Countries with Data,Stale Observations,Stale %
+WATER_ACCESS,SH.H2O.SMDW.ZS,People using safely managed drinking water services,Water Need,LOW,% of population,Yes,0.6,2024,Lower access implies higher infrastructure priority.,150,0,0.0
+FRESHWATER_PC,ER.H2O.INTR.PC,Renewable internal freshwater resources per capita,Water Need,LOW,m³ per person,Yes,0.4,2022,Lower renewable freshwater availability implies greater water-resource pressure.,183,0,0.0
+U5_MORTALITY,SH.DYN.MORT,"Mortality rate, under-5",Human Development,HIGH,"per 1,000 live births",Yes,0.6,2024,Higher mortality indicates greater human-development vulnerability.,196,0,0.0
+GDP_PC_PPP,NY.GDP.PCAP.PP.CD,"GDP per capita, PPP",Infrastructure & Affordability,LOW,current international $,Yes,0.5,2025,Lower economic capacity increases prioritisation score.,199,0,0.0
+ELECTRICITY,EG.ELC.ACCS.ZS,Access to electricity,Infrastructure & Affordability,LOW,% of population,Yes,0.5,2024,Used as a broader infrastructure-development proxy.,215,0,0.0
+RURAL_POP,SP.RUR.TOTL.ZS,Rural population,Reach & Growth,HIGH,% of population,Yes,0.3,2025,Higher rural population may increase need for distributed water infrastructure.,217,0,0.0
+POP_GROWTH,SP.POP.GROW,Population growth,Reach & Growth,HIGH,annual %,Yes,0.3,2025,Faster growth increases future infrastructure demand.,217,0,0.0
+POP_TOTAL,SP.POP.TOTL,Total population,Reach & Growth,HIGH,people,Yes,0.4,2025,Represents potential scale of population impact.,217,0,0.0
+EDUCATION,SE.PRM.CMPT.ZS,"Primary completion rate, total",Human Development,LOW,% of relevant age group,Yes,0.4,2025,	Lower primary completion implies greater human-development vulnerability.,174,9,0.05172413793103448

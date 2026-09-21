@@ -1,0 +1,50 @@
+:root {
+  --navy: #102a3a;
+  --teal: #087f8c;
+  --pale: #eef4f7;
+}
+
+.stApp {
+  background: #f7f9fb;
+}
+
+[data-testid="stSidebar"] {
+  background: #ffffff;
+  border-right: 1px solid #dde6eb;
+}
+
+.brand-title {
+  color: var(--navy);
+  font-size: 1.65rem;
+  font-weight: 750;
+  line-height: 1.15;
+  margin: 1rem 0 0.4rem;
+}
+
+h1, h2, h3 {
+  color: var(--navy);
+}
+
+.scope-note {
+  background: #e8f3f4;
+  border-left: 4px solid var(--teal);
+  border-radius: 5px;
+  color: #24414f;
+  margin: 0.25rem 0 1.1rem;
+  padding: 0.7rem 0.9rem;
+}
+
+[data-testid="stMetric"] {
+  background: #ffffff;
+  border: 1px solid #dde6eb;
+  border-radius: 8px;
+  min-height: 112px;
+  padding: 0.8rem 1rem;
+}
+
+[data-testid="stPlotlyChart"], [data-testid="stDataFrame"] {
+  background: #ffffff;
+  border: 1px solid #e1e8ec;
+  border-radius: 8px;
+  padding: 0.35rem;
+}

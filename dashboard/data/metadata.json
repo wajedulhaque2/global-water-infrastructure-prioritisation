@@ -1,0 +1,11 @@
+{
+  "source": "World Bank World Development Indicators",
+  "source_url": "https://data.worldbank.org/indicator",
+  "retrieved_at": "2026-08-20T16:40:35.313000",
+  "analysis_start_year": 2018,
+  "analysis_end_year": 2025,
+  "country_count": 217,
+  "indicator_count": 9,
+  "history_rows": 12560,
+  "latest_rows": 1768
+}
