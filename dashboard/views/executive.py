@@ -30,6 +30,19 @@ def render(scored, latest, context: dict[str, object]) -> None:
     cols[2].metric("Highest priority score", f"{top['Priority Score']:.1f}" if top is not None else "n.a.")
     cols[3].metric("Median completeness", f"{eligible['Completeness'].median():.0%}" if not eligible.empty else "n.a.")
 
+    map_fig = px.choropleth(
+        eligible,
+        locations="ISO3",
+        color="Priority Score",
+        hover_name="Country",
+        hover_data={"Rank": True, "Completeness": ":.0%", "ISO3": False},
+        color_continuous_scale=[[0, "#E5F0E9"], [0.5, ORANGE], [1, "#944734"]],
+        range_color=(0, 100),
+    )
+    map_fig.update_geos(showframe=False, showcoastlines=True, coastlinecolor="#BCC9D2")
+    map_fig.update_layout(title="Global priority map", coloraxis_colorbar_title="Priority score")
+    st.plotly_chart(style_figure(map_fig, 520), width="stretch", config={"displayModeBar": False})
+
     st.plotly_chart(
         horizontal_bar(eligible.head(15), "Priority Score", "Country", "Top priority countries", TEAL, 560, maximum=100),
         width="stretch",
@@ -41,19 +54,6 @@ def render(scored, latest, context: dict[str, object]) -> None:
         width="stretch",
         config={"displayModeBar": False},
     )
-
-    map_fig = px.choropleth(
-        eligible,
-        locations="ISO3",
-        color="Priority Score",
-        hover_name="Country",
-        hover_data={"Rank": True, "Completeness": ":.0%", "ISO3": False},
-        color_continuous_scale=[[0, "#E8F0F5"], [0.5, ORANGE], [1, "#A63D2F"]],
-        range_color=(0, 100),
-    )
-    map_fig.update_geos(showframe=False, showcoastlines=True, coastlinecolor="#BCC9D2")
-    map_fig.update_layout(title="Global priority map", coloraxis_colorbar_title="Priority score")
-    st.plotly_chart(style_figure(map_fig, 520), width="stretch", config={"displayModeBar": False})
 
     selected = scored.loc[scored["Country"].eq(context["country"])].iloc[0]
     st.subheader(f"{selected['Country']} profile")
