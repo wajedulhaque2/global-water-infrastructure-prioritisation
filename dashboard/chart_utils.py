@@ -4,16 +4,16 @@ import plotly.express as px
 import plotly.graph_objects as go
 
 
-NAVY = "#102A3A"
-TEAL = "#087F8C"
-BLUE = "#2F6690"
-GREEN = "#2F7D4A"
-ORANGE = "#D57A0B"
-LIGHT = "#E8F0F5"
+NAVY = "#163D46"
+TEAL = "#087F78"
+BLUE = "#316B89"
+GREEN = "#4B8B67"
+ORANGE = "#C76B46"
+LIGHT = "#E7F2ED"
 PILLAR_COLORS = {
     "Water Need": TEAL,
-    "Human Development": "#2A9D8F",
-    "Infrastructure & Affordability": "#5C7F7A",
+    "Human Development": "#66A997",
+    "Infrastructure & Affordability": "#B88259",
     "Reach & Growth": GREEN,
 }
 
@@ -21,8 +21,8 @@ PILLAR_COLORS = {
 def style_figure(fig: go.Figure, height: int | None = None) -> go.Figure:
     fig.update_layout(
         template="plotly_white",
-        font={"family": "Arial", "color": NAVY},
-        title={"font": {"size": 18}, "x": 0.025, "xanchor": "left"},
+        font={"family": "Trebuchet MS, Arial", "color": NAVY},
+        title={"font": {"size": 19, "family": "Georgia"}, "x": 0.025, "xanchor": "left"},
         margin={"l": 24, "r": 32, "t": 64, "b": 48},
         height=height,
         hoverlabel={"font": {"family": "Arial"}},
